@@ -1,0 +1,151 @@
+Docker Installation:
+-------------------------------------------------------------------------
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+
+
+-------------------------------------------------------------------------
+Assignment 1 : 
+
+1. Install docker
+
+sudo su
+docker pull nginx 
+docker pull hello-world 
+docker pull centos
+docker images
+docker run --name mynginx nginx
+docker ps
+docker stop mynginx
+docker ps -a
+docker start mynginx
+docker ps
+docker pause mynginx
+docker ps
+docker unpause mynginx
+docker ps
+docker kill nginx 
+docker ps -a
+
+#####
+docker ps -a
+docker rm containerId -f
+docker images
+docker rmi imageId -f
+
+
+-------------------------------------------------------------------------
+Assignment 2 : 
+
+2) create your own image.
+	> (how to create your own image)
+	> nano Dockerfile
+		FROM ubuntu
+		MAINTINER "sakshidiggikar681@gmail.com"
+		RUN apt-get update -y
+		RUN apt-get install nginx -y
+	
+	>docker build -t myimage:latest .
+3) dokcer login
+4) dokcer tag (imageid) thesakshidiggikar/ownimage
+5) docker push thesakshidiggikar/ownimage
+6) docker rmi (imageid)
+7) docker pull thesakshidiggikar/ownimage
+
+
+-------------------------------------------------------------------------
+Assignment 6 : 
+
+APP.PY
+###########
+from redis import Redis
+from flask import Flask
+
+app = Flask(__name__)
+cache = Redis(host='redis', port=6379)
+
+def get_hit_count():
+    try:
+        return cache.incr('hits')
+    except:
+        return "error"
+
+@app.route('/')
+def hello():
+    count = get_hit_count()
+    return f'This site is seen {count} times.\n'
+
+REQUIREMENTS.TXT
+------------------------------------------------------------------------
+flask 
+redis 
+
+
+DOCKERFILE
+------------------------------------------------------------------------
+FROM python:3.10
+WORKDIR /code
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+ENV FLASK_RUN_HOST=0.0.0.0
+EXPOSE 5000
+COPY . .
+CMD ["flask", "run"]
+
+
+COMPOSE.YAML
+--------------------------------------------------------------------------
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+  redis:
+    image: "redis:alpine"
+
+--------------------------------------------------------------------------
+docker compose up
+
+
+-------------------------------------------------------------------------
+Assignment 7 : 
+same as assignment 6
+
+docker service create --name newservicename -p 5000:5000 your_image name
+OR
+docker service create alpine ping www.google.com myservice
+
+docker service ls
+docker service scale serviceId=5
+
+docker service ps serviceId
+
+
+-------------------------------------------------------------------------
+Assignment 8 : 
+
+Same as assigment 6
+
+docker stack deploy -c compose.yaml mystack
+
+you can scale services :
+	docker service ls
+	docker service scale serviceId=10
+
+docker service ps serviceId
+-------------------------------------------------------------------------
+Assignment 9 : 
+
+docker run -d --name mypostgres --health-cmd="pg_isready -U postgres || exit 1" -e POSTGRES_PASSWORD="mypswd" postgres
