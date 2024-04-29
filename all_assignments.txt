@@ -165,3 +165,13 @@ docker service ps serviceId
 Assignment 9 : 
 
 docker run -d --name mypostgres --health-cmd="pg_isready -U postgres || exit 1" -e POSTGRES_PASSWORD="mypswd" postgres
+
+manually:
+  docker container run --name postgres1 -e POSTGRES_PASSWORD="mypswd" -d postgres
+  docker ps
+
+  # go inside container
+  docker container exec -it postgres1 bash
+  pg_isready -U postgres
+  exit
+  
