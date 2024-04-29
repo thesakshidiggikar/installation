@@ -64,6 +64,22 @@ Assignment 2 :
 6) docker rmi (imageid)
 7) docker pull thesakshidiggikar/ownimage
 
+-------------------------------------------------------------------------
+Assignment 3 : 
+docker pull jenkins/jenkins:lts
+docker inspect jenkins/jenkins:lts 
+docker run --name myjenkins -d -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
+
+
+-------------------------------------------------------------------------
+Assignment 4 : 
+docker pull registry
+docker inspect registry
+docker run --name myregistery -p 5000:5000 registry
+
+docker pull hello-world
+docker tag hello-world locahost/myhello:1
+docker push myhello:1
 
 -------------------------------------------------------------------------
 Assignment 6 : 
