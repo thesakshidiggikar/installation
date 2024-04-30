@@ -1,0 +1,131 @@
+assignment 1
+
+install docker 
+
+$ systemctl status docker
+
+$ docker images
+
+$ docker ps -a 
+
+$ docker run hello -world
+
+$ docker run -d redis
+
+$ docker run --name mynginx -p 7089:80 -d nginx
+
+$ docker ps -a
+
+$ docker pause nginx container_id
+
+$ docker unpause container_id
+
+$ docker stop container_id
+
+$ docker ps -a
+
+$ docker start container_id
+
+$docker ps -a
+
+$docker kill container_id
+
+$ docker rm container_id
+-----------------------------------------------------------------------------------
+  
+assignment2 
+
+build docker image
+$ docker build -t nikhil:01 .
+
+create repository docker hub the name of the repository is exam
+
+$ sudo docker tag nikhil:01 nikhilmadhavchavan/exam:001
+
+$ docker images
+
+$ docker login
+
+push image docker hub
+$ docker push nikhilmadhavchavan/exam:001
+
+delete avalable images in locally
+
+$ docker rmi -f image id
+
+and the last one is the run image in  from docker hub the command is 
+
+$ docker run nikhilmadhavchavan/exam:001
+---------------------------
+------------------------------------------------------------------------
+assignment 3
+
+Jenkins pull docker hub
+
+security group inbound rules shh, 5000,8080,https ,http
+
+create instance and connect instance
+
+install docker 
+
+$ systemctl status docker
+
+$  docker pull jenkins/jenkins:latest
+
+$  docker run -p 8080:8080 -p 50000:50000  jenkins/jenkins:latest
+
+copy public id and past 
+complete
+--------------------------------------------------------------------------------------
+assignment 4
+
+private registry
+
+security groups 
+
+shh,5000,http
+
+connect instance you can be created
+
+install docker on this instance
+
+$ systemctl status docker 
+
+$ docker images
+
+$ docker pull registry:latest
+
+$ docker run --name registry -p 5000:5000 -d registry:latest
+
+ build a custom image using NGINX for docker and index.html
+
+$ nano index.html
+ <h1> NAME :- Nikhil Madhav Chavan </h1>
+ <h1>PRN :- 20210801125</h1>
+
+$ nano dockerfile
+FROM nginx:latest
+COPY ./index.html /usr/share/nginx/html/index.html
+
+$ docker tag mynginx:latest localhost:5000/mynginx:latest
+ 
+$ docker push localhost:5000/mynginx:latest
+
+
+$docker images
+
+$ docker rmi -f image id
+
+$ docker images
+
+$ docker pull localhost:5000/mynginx:latest
+
+$ docker images
+
+$ docker run --name mynginx -p 80:80 -d localhost:5000/mynginx:latest
+
+$docker ps -a
+
+copy public ip and paste
+done
+
