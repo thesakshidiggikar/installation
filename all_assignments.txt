@@ -137,28 +137,39 @@ docker compose up
 
 -------------------------------------------------------------------------
 Assignment 7 : 
-same as assignment 6
 
-docker service create --name newservicename -p 5000:5000 your_image name
-OR
-docker service create alpine ping www.google.com myservice
+docker swarm init 
+docker join -> worker paste 
 
+docker service create --replicas 5 alpine ping www.google.com
 docker service ls
-docker service scale serviceId=5
-
 docker service ps serviceId
 
 
 -------------------------------------------------------------------------
 Assignment 8 : 
 
-Same as assigment 6
+Same as assigment 6 (app.py, requirements.txt, Dockerfile)
+
+docker build -t newimage:1 .
+
+
+nano COMPOSE.YAML
+--------------------------------------------------------------------------
+services:
+  web:
+    image: "newimage:1"
+    ports:
+      - "5000:5000"
+  redis:
+    image: "redis:alpine"
+
 
 docker stack deploy -c compose.yaml mystack
 
 you can scale services :
-	docker service ls
-	docker service scale serviceId=10
+	docker stack ls
+	docker stack scale mystack=10
 
 docker service ps serviceId
 -------------------------------------------------------------------------
