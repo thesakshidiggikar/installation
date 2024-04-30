@@ -167,11 +167,9 @@ services:
 
 docker stack deploy -c compose.yaml mystack
 
-you can scale services :
-	docker stack ls
-	docker stack scale mystack=10
+docker stack ls
+docker stack ps mystack
 
-docker service ps serviceId
 -------------------------------------------------------------------------
 Assignment 9 : 
 
